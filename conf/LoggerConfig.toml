@@ -1,0 +1,11 @@
+[logger]
+level.default = "warn"
+
+[logger.level.packages]
+packageA = "warn"
+packageB = "info"
+packageC = "debug"
+
+[logger.handler]
+format = "json"
+outputPath = "stdout"

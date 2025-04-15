@@ -7,8 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-
-	"github.com/ThisaraWeerakoon/dynamic-go-logger/internal/pkg/loggerfactory"
+	"github.com/ThisaraWeerakoon/dynamic-go-logger/pkg/loggerfactory"
 
 	"github.com/knadh/koanf/parsers/toml"
 	"github.com/knadh/koanf/providers/file"
@@ -82,8 +81,8 @@ func (c *Config) MustUnmarshal(key string, out interface{}) {
 	}
 }
 
-func InitializeConfig(ctx context.Context, confFolderPath string) error {
-    files, err := os.ReadDir(confFolderPath)
+func InitializeConfig(confFolderPath string) error {
+	files, err := os.ReadDir(confFolderPath)
 	if err != nil {
 		return err
 	}
@@ -102,25 +101,25 @@ func InitializeConfig(ctx context.Context, confFolderPath string) error {
 		case "LoggerConfig":
 			var levelMap map[string]string
 			var slogHandlerConfig loggerfactory.SlogHandlerConfig
-		
+
 			if cfg.IsSet("logger") {
 				cfg.MustUnmarshal("logger.handler", &slogHandlerConfig)
 				cfg.MustUnmarshal("logger.level.packages", &levelMap)
 			}
-		
+
 			cm := loggerfactory.GetConfigManager()
 			cm.SetLogLevelMap(&levelMap)
 			cm.SetSlogHandlerConfig(slogHandlerConfig)
-		
+
 			// Start watching for config changes
 			cfg.Watch(context.Background(), configFilePath)
-		
+
 			// Add the config to the context
 			// configContext := ctx.Value(utils.ConfigContextKey).(*artifacts.ConfigContext)
-			// configContext.AddLoggerConfig(cfg)	
+			// configContext.AddLoggerConfig(cfg)
 
-		// case "ServerConfig":
-		// TODO: Add server config
+			// case "ServerConfig":
+			// TODO: Add server config
 		}
 	}
 	return nil
