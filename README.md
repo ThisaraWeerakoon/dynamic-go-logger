@@ -161,11 +161,3 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-```
-
----
-
-This README provides clear directions on how to set up, configure, and run the dynamic package-level logger in a Go application. It also explains the key principles behind the design and encourages contributions from the community.
-
-Feel free to customize further according to your needs!
